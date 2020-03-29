@@ -4,10 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
+
 
 public class ScannerQR extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView escanerZXing;
@@ -40,24 +45,31 @@ public class ScannerQR extends AppCompatActivity implements ZXingScannerView.Res
     public void handleResult(Result result) {
         setContentView(R.layout.activity_main);
 
-        String texto = result.getText();
+        String contQr = result.getText();
 
-        AlertDialog.Builder alerta = new AlertDialog.Builder(this);
-
-        alerta.setTitle("Resultado");
-
-        alerta.setMessage("Resultado: " + texto);
-
-        alerta.setPositiveButton("OK", new DialogInterface.OnClickListener(){
-                @Override
-                public void onClick(DialogInterface dialog, int id){
-
-                }
-        });
-
-        alerta.show();
+        EjecQr(contQr);
 
         escanerZXing.resumeCameraPreview(this);
+    }
+
+    private void EjecQr(String dato){
+
+        if (dato != null){
+
+            if(dato.contains("TEL")){
+                String tel = dato.replace("TEL:", "tel:+");
+                Intent callIntent = new Intent(Intent.ACTION_DIAL, Uri.parse(tel));
+                startActivity(callIntent);
+            }
+            else {
+
+                Intent callIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(dato));
+                startActivity(callIntent);
+            }
+
+        }
+
+        Toast.makeText(this, "Este Qr no tiene contenido", Toast.LENGTH_SHORT).show();
 
     }
 }

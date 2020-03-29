@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 0;
     Button qrBtn;
@@ -23,11 +23,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         qrBtn = findViewById(R.id.QrBtn);
+        qrBtn.setOnClickListener(this);
 
     }
 
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.QrBtn:
+                Escanear();
+                break;
+        }
+    }
 
-    public void Escanear(View view) {
+    public void Escanear() {
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
             != PackageManager.PERMISSION_GRANTED){
@@ -50,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
 
 
 
