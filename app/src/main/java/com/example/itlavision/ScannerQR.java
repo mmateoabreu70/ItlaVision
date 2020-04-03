@@ -2,8 +2,6 @@ package com.example.itlavision;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -68,8 +66,6 @@ public class ScannerQR extends AppCompatActivity implements ZXingScannerView.Res
             }
 
         }
-
-        Toast.makeText(this, "Este Qr no tiene contenido", Toast.LENGTH_SHORT).show();
 
     }
 }
